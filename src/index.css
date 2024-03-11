@@ -95,6 +95,11 @@ nav {
   border-bottom: 1px solid #eee;
 }
 
+.movements__row:hover {
+  background-color: #f3f3f3;
+  cursor: pointer;
+}
+
 .movements__type {
   font-size: 1.1rem;
   text-transform: uppercase;
