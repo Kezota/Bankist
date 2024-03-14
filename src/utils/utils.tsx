@@ -15,5 +15,5 @@ export function formatCurrency(amount: number) {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0,
-  }).format(amount * 1000);
+  }).format(amount);
 }

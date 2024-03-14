@@ -6,6 +6,7 @@ import { getCurrentDate } from "../utils/utils";
 interface IncomeProps {
   setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
 }
+
 export function Income({ setTransactions }: IncomeProps) {
   const amount = useRef<HTMLInputElement>(null);
 
@@ -25,8 +26,8 @@ export function Income({ setTransactions }: IncomeProps) {
         type: "income",
         description: "income",
         date: getCurrentDate(),
-        amount: parseFloat(value || "0"),
-      },
+        amount: parseFloat(value || "0") * 1000,
+      } as TransactionProps,
     ]);
   }
 
@@ -47,10 +48,12 @@ export function Income({ setTransactions }: IncomeProps) {
     </div>
   );
 }
-interface InvestmentProps {
+
+interface InvestProps {
   setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
 }
-export function Investment({ setTransactions }: InvestmentProps) {
+
+export function Invest({ setTransactions }: InvestProps) {
   const amount = useRef<HTMLInputElement>(null);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -69,8 +72,8 @@ export function Investment({ setTransactions }: InvestmentProps) {
         type: "invest",
         description: "invest",
         date: getCurrentDate(),
-        amount: parseFloat(value || "0"),
-      },
+        amount: parseFloat(value || "0") * 1000,
+      } as TransactionProps,
     ]);
   }
 
@@ -91,9 +94,11 @@ export function Investment({ setTransactions }: InvestmentProps) {
     </div>
   );
 }
+
 interface ExpenseProps {
   setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
 }
+
 export function Expense({ setTransactions }: ExpenseProps) {
   const amount = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
@@ -117,8 +122,8 @@ export function Expense({ setTransactions }: ExpenseProps) {
         type: "expense",
         description: desc || "expense",
         date: getCurrentDate(),
-        amount: -parseFloat(value || "0"),
-      },
+        amount: -parseFloat(value || "0") * 1000,
+      } as TransactionProps,
     ]);
   }
 

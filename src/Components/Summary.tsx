@@ -4,8 +4,9 @@ import { formatCurrency } from "../utils/utils";
 
 interface SummaryProps {
   transactions: TransactionProps[];
+  setSort: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export function Summary({ transactions }: SummaryProps) {
+export default function Summary({ transactions, setSort }: SummaryProps) {
   let [totalIncome, totalInvest, totalExpense] = [0, 0, 0];
 
   for (const transaction of transactions) {
@@ -13,6 +14,13 @@ export function Summary({ transactions }: SummaryProps) {
     else if (transaction.type === "invest") totalInvest += transaction.amount;
     else totalExpense += -transaction.amount;
   }
+
+  function handleCLick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.preventDefault();
+
+    setSort((prev) => !prev);
+  }
+
   return (
     <div className="summary">
       <p className="summary__label">In</p>
@@ -27,7 +35,10 @@ export function Summary({ transactions }: SummaryProps) {
       <p className="summary__value summary__value--invest">
         {formatCurrency(totalInvest)}
       </p>
-      {/* <button className="btn--sort">↕️ SORT</button> */}
+
+      <button className="btn--sort" onClick={handleCLick}>
+        ↕️ SORT
+      </button>
     </div>
   );
 }
