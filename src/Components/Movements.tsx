@@ -8,6 +8,7 @@ interface MovementsProps {
   >;
   setTogglePopup: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 export default function Movements({
   transactions,
   setSelectedTransaction,

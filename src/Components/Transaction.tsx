@@ -1,6 +1,5 @@
-import { TransactionProps } from "../App";
-
 import { useRef } from "react";
+import { TransactionProps } from "../App";
 import { getCurrentDate } from "../utils/utils";
 
 interface IncomeProps {

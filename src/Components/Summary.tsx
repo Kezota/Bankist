@@ -1,5 +1,4 @@
 import { TransactionProps } from "../App";
-
 import { formatCurrency } from "../utils/utils";
 
 interface SummaryProps {

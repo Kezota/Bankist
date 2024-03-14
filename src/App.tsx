@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from "./assets/logo.png";
+
 import Balance from "./Components/Balance";
 import Movements from "./Components/Movements";
 import Summary from "./Components/Summary";
