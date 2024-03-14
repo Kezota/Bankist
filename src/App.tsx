@@ -25,6 +25,14 @@ export default function App() {
   const [togglePopup, setTogglePopup] = useState(false);
 
   useEffect(() => {
+    const storedTransactions = localStorage.getItem("transactions");
+    if (storedTransactions) {
+      setTransactions(JSON.parse(storedTransactions));
+    }
+    return () => setTransactions([]);
+  }, []);
+
+  useEffect(() => {
     if (sort) {
       setSortedTransactions(
         transactions
@@ -33,10 +41,6 @@ export default function App() {
       );
     }
   }, [sort, transactions]);
-
-  // console.log(sort);
-  // console.log("sorted: ", sortedTransactions);
-  // console.log("not: ", transactions);
 
   useEffect(() => {
     let [totalIncome, totalInvest, totalExpense] = [0, 0, 0];
@@ -48,6 +52,7 @@ export default function App() {
     }
 
     setBalance(totalIncome - totalInvest + totalExpense);
+    return () => setBalance(0);
   }, [transactions]);
 
   useEffect(() => {
@@ -57,8 +62,16 @@ export default function App() {
           (transaction) => transaction !== selectedTransaction
         )
       );
+      localStorage.setItem(
+        "transactions",
+        JSON.stringify(
+          transactions.filter(
+            (transaction) => transaction !== selectedTransaction
+          )
+        )
+      );
     }
-  }, [selectedTransaction, togglePopup, transactions]);
+  }, [selectedTransaction, togglePopup]);
 
   return (
     <>
@@ -84,9 +97,12 @@ export default function App() {
           setTogglePopup={setTogglePopup}
         />
         <Summary transactions={transactions} setSort={setSort} />
-        <Income setTransactions={setTransactions} />
-        <Invest setTransactions={setTransactions} />
-        <Expense setTransactions={setTransactions} />
+        <Income transactions={transactions} setTransactions={setTransactions} />
+        <Invest transactions={transactions} setTransactions={setTransactions} />
+        <Expense
+          transactions={transactions}
+          setTransactions={setTransactions}
+        />
       </main>
 
       {/* <footer>&copy; by Jonas Schmedtmann.</footer> */}

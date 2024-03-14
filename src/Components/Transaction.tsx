@@ -4,10 +4,11 @@ import { useRef } from "react";
 import { getCurrentDate } from "../utils/utils";
 
 interface IncomeProps {
+  transactions: TransactionProps[];
   setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
 }
 
-export function Income({ setTransactions }: IncomeProps) {
+export function Income({ transactions, setTransactions }: IncomeProps) {
   const amount = useRef<HTMLInputElement>(null);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -29,6 +30,19 @@ export function Income({ setTransactions }: IncomeProps) {
         amount: parseFloat(value || "0") * 1000,
       } as TransactionProps,
     ]);
+
+    localStorage.setItem(
+      "transactions",
+      JSON.stringify([
+        ...transactions,
+        {
+          type: "income",
+          description: "income",
+          date: getCurrentDate(),
+          amount: parseFloat(value || "0") * 1000,
+        } as TransactionProps,
+      ])
+    );
   }
 
   return (
@@ -50,10 +64,11 @@ export function Income({ setTransactions }: IncomeProps) {
 }
 
 interface InvestProps {
+  transactions: TransactionProps[];
   setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
 }
 
-export function Invest({ setTransactions }: InvestProps) {
+export function Invest({ transactions, setTransactions }: InvestProps) {
   const amount = useRef<HTMLInputElement>(null);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -75,6 +90,19 @@ export function Invest({ setTransactions }: InvestProps) {
         amount: parseFloat(value || "0") * 1000,
       } as TransactionProps,
     ]);
+
+    localStorage.setItem(
+      "transactions",
+      JSON.stringify([
+        ...transactions,
+        {
+          type: "invest",
+          description: "invest",
+          date: getCurrentDate(),
+          amount: parseFloat(value || "0") * 1000,
+        } as TransactionProps,
+      ])
+    );
   }
 
   return (
@@ -96,10 +124,11 @@ export function Invest({ setTransactions }: InvestProps) {
 }
 
 interface ExpenseProps {
+  transactions: TransactionProps[];
   setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
 }
 
-export function Expense({ setTransactions }: ExpenseProps) {
+export function Expense({ transactions, setTransactions }: ExpenseProps) {
   const amount = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
 
@@ -125,6 +154,19 @@ export function Expense({ setTransactions }: ExpenseProps) {
         amount: -parseFloat(value || "0") * 1000,
       } as TransactionProps,
     ]);
+
+    localStorage.setItem(
+      "transactions",
+      JSON.stringify([
+        ...transactions,
+        {
+          type: "expense",
+          description: desc || "expense",
+          date: getCurrentDate(),
+          amount: -parseFloat(value || "0") * 1000,
+        } as TransactionProps,
+      ])
+    );
   }
 
   return (
