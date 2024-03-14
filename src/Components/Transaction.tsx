@@ -15,6 +15,7 @@ export function Income({ transactions, setTransactions }: IncomeProps) {
 
     let value: string | undefined = "";
 
+    if (!amount.current?.value) return;
     if (amount.current) {
       value = amount.current.value;
       (amount.current as HTMLInputElement).value = "";
@@ -75,6 +76,7 @@ export function Invest({ transactions, setTransactions }: InvestProps) {
 
     let value: string | undefined = "";
 
+    if (!amount.current?.value) return;
     if (amount.current) {
       value = amount.current.value;
       (amount.current as HTMLInputElement).value = "";
@@ -137,6 +139,7 @@ export function Expense({ transactions, setTransactions }: ExpenseProps) {
     let value: string | undefined = "";
     let desc: string | undefined = "";
 
+    if (!amount.current?.value) return;
     if (amount.current && description.current) {
       value = amount.current.value;
       desc = description.current.value;
