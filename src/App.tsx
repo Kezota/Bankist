@@ -6,6 +6,7 @@ import Movements from "./Components/Movements";
 import Summary from "./Components/Summary";
 import { Income, Invest, Expense } from "./Components/Transaction";
 import Popup from "./Components/Popup";
+import { useLocalStorageState } from "./hooks/useLocalStorage";
 
 export type TransactionProps = {
   type: string;
@@ -14,65 +15,45 @@ export type TransactionProps = {
   amount: number;
 };
 
+const calcBalance = (transactions: TransactionProps[]) => {
+  let [totalIncome, totalInvest, totalExpense] = [0, 0, 0];
+
+  for (const transaction of transactions) {
+    if (transaction.type === "income") totalIncome += transaction.amount;
+    else if (transaction.type === "invest") totalInvest += transaction.amount;
+    else totalExpense += transaction.amount;
+  }
+
+  return totalIncome - totalInvest + totalExpense;
+};
+
 export default function App() {
-  const [balance, setBalance] = useState(0);
-  const [transactions, setTransactions] = useState<TransactionProps[]>([]);
+  const [transactions, setTransactions] = useLocalStorageState<
+    TransactionProps[]
+  >("transactions", []);
+
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionProps>();
-  const [sortedTransactions, setSortedTransactions] = useState<
-    TransactionProps[]
-  >([]);
+
   const [sort, setSort] = useState(false);
   const [togglePopup, setTogglePopup] = useState(false);
 
-  useEffect(() => {
-    const storedTransactions = localStorage.getItem("transactions");
-    if (storedTransactions) {
-      setTransactions(JSON.parse(storedTransactions));
-    }
-    return () => setTransactions([]);
-  }, []);
+  const balance = calcBalance(transactions);
 
-  useEffect(() => {
-    if (sort) {
-      setSortedTransactions(
-        transactions
-          .slice()
-          .sort((a, b) => Math.abs(a.amount) - Math.abs(b.amount))
-      );
-    }
-  }, [sort, transactions]);
-
-  useEffect(() => {
-    let [totalIncome, totalInvest, totalExpense] = [0, 0, 0];
-
-    for (const transaction of transactions) {
-      if (transaction.type === "income") totalIncome += transaction.amount;
-      else if (transaction.type === "invest") totalInvest += transaction.amount;
-      else totalExpense += transaction.amount;
-    }
-
-    setBalance(totalIncome - totalInvest + totalExpense);
-    return () => setBalance(0);
-  }, [transactions]);
+  const sortedTransactions = transactions
+    .slice()
+    .sort((a, b) => Math.abs(a.amount) - Math.abs(b.amount));
 
   useEffect(() => {
     if (selectedTransaction && !togglePopup) {
-      setTransactions(
-        transactions.filter(
+      setTransactions(() => {
+        return transactions.filter(
           (transaction) => transaction !== selectedTransaction
-        )
-      );
-      localStorage.setItem(
-        "transactions",
-        JSON.stringify(
-          transactions.filter(
-            (transaction) => transaction !== selectedTransaction
-          )
-        )
-      );
+        );
+      });
+      setSelectedTransaction(undefined);
     }
-  }, [selectedTransaction, togglePopup]);
+  }, [selectedTransaction, togglePopup, transactions, setTransactions]);
 
   return (
     <>
@@ -98,12 +79,9 @@ export default function App() {
           setTogglePopup={setTogglePopup}
         />
         <Summary transactions={transactions} setSort={setSort} />
-        <Income transactions={transactions} setTransactions={setTransactions} />
-        <Invest transactions={transactions} setTransactions={setTransactions} />
-        <Expense
-          transactions={transactions}
-          setTransactions={setTransactions}
-        />
+        <Income setTransactions={setTransactions} />
+        <Invest setTransactions={setTransactions} />
+        <Expense setTransactions={setTransactions} />
       </main>
 
       {/* <footer>&copy; by Jonas Schmedtmann.</footer> */}

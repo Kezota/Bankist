@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import { TransactionProps } from "../App";
 import { getCurrentDate } from "../utils/utils";
+import { TSetStateLocalStorage } from "../hooks/useLocalStorage";
 
 interface IncomeProps {
-  transactions: TransactionProps[];
-  setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
+  setTransactions: TSetStateLocalStorage<TransactionProps[]>;
 }
 
-export function Income({ transactions, setTransactions }: IncomeProps) {
+export function Income({ setTransactions }: IncomeProps) {
   const amount = useRef<HTMLInputElement>(null);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -30,19 +30,6 @@ export function Income({ transactions, setTransactions }: IncomeProps) {
         amount: parseFloat(value || "0") * 1000,
       } as TransactionProps,
     ]);
-
-    localStorage.setItem(
-      "transactions",
-      JSON.stringify([
-        ...transactions,
-        {
-          type: "income",
-          description: "income",
-          date: getCurrentDate(),
-          amount: parseFloat(value || "0") * 1000,
-        } as TransactionProps,
-      ])
-    );
   }
 
   return (
@@ -64,11 +51,10 @@ export function Income({ transactions, setTransactions }: IncomeProps) {
 }
 
 interface InvestProps {
-  transactions: TransactionProps[];
-  setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
+  setTransactions: TSetStateLocalStorage<TransactionProps[]>;
 }
 
-export function Invest({ transactions, setTransactions }: InvestProps) {
+export function Invest({ setTransactions }: InvestProps) {
   const amount = useRef<HTMLInputElement>(null);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -91,19 +77,6 @@ export function Invest({ transactions, setTransactions }: InvestProps) {
         amount: parseFloat(value || "0") * 1000,
       } as TransactionProps,
     ]);
-
-    localStorage.setItem(
-      "transactions",
-      JSON.stringify([
-        ...transactions,
-        {
-          type: "invest",
-          description: "invest",
-          date: getCurrentDate(),
-          amount: parseFloat(value || "0") * 1000,
-        } as TransactionProps,
-      ])
-    );
   }
 
   return (
@@ -125,11 +98,10 @@ export function Invest({ transactions, setTransactions }: InvestProps) {
 }
 
 interface ExpenseProps {
-  transactions: TransactionProps[];
-  setTransactions: React.Dispatch<React.SetStateAction<TransactionProps[]>>;
+  setTransactions: TSetStateLocalStorage<TransactionProps[]>;
 }
 
-export function Expense({ transactions, setTransactions }: ExpenseProps) {
+export function Expense({ setTransactions }: ExpenseProps) {
   const amount = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
 
@@ -156,19 +128,6 @@ export function Expense({ transactions, setTransactions }: ExpenseProps) {
         amount: -parseFloat(value || "0") * 1000,
       } as TransactionProps,
     ]);
-
-    localStorage.setItem(
-      "transactions",
-      JSON.stringify([
-        ...transactions,
-        {
-          type: "expense",
-          description: desc || "expense",
-          date: getCurrentDate(),
-          amount: -parseFloat(value || "0") * 1000,
-        } as TransactionProps,
-      ])
-    );
   }
 
   return (
