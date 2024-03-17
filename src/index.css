@@ -190,6 +190,10 @@ nav {
   color: #333;
 }
 
+.operation h2 {
+  text-transform: capitalize;
+}
+
 .operation--invest {
   background-image: linear-gradient(to top left, #ffb003, #ffcb03);
 }

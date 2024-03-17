@@ -3,105 +3,12 @@ import { TransactionProps } from "../App";
 import { getCurrentDate } from "../utils/utils";
 import { TSetStateLocalStorage } from "../hooks/useLocalStorage";
 
-interface IncomeProps {
+interface ITransaction {
+  type: string;
   setTransactions: TSetStateLocalStorage<TransactionProps[]>;
 }
 
-export function Income({ setTransactions }: IncomeProps) {
-  const amount = useRef<HTMLInputElement>(null);
-
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-
-    let value: string | undefined = "";
-
-    if (!amount.current?.value) return;
-    if (amount.current) {
-      value = amount.current.value;
-      (amount.current as HTMLInputElement).value = "";
-    }
-
-    setTransactions((prev) => [
-      ...prev,
-      {
-        type: "income",
-        description: "income",
-        date: getCurrentDate(),
-        amount: parseFloat(value || "0") * 1000,
-      } as TransactionProps,
-    ]);
-  }
-
-  return (
-    <div className="operation operation--income">
-      <h2>Income</h2>
-      <form className="form form--income">
-        <input
-          type="number"
-          className="form__input form__input--income-amount"
-          ref={amount}
-        />
-        <button className="form__btn form__btn--income" onClick={handleClick}>
-          &rarr;
-        </button>
-        <label className="form__label form__label--income">Amount</label>
-      </form>
-    </div>
-  );
-}
-
-interface InvestProps {
-  setTransactions: TSetStateLocalStorage<TransactionProps[]>;
-}
-
-export function Invest({ setTransactions }: InvestProps) {
-  const amount = useRef<HTMLInputElement>(null);
-
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-
-    let value: string | undefined = "";
-
-    if (!amount.current?.value) return;
-    if (amount.current) {
-      value = amount.current.value;
-      (amount.current as HTMLInputElement).value = "";
-    }
-
-    setTransactions((prev) => [
-      ...prev,
-      {
-        type: "invest",
-        description: "invest",
-        date: getCurrentDate(),
-        amount: parseFloat(value || "0") * 1000,
-      } as TransactionProps,
-    ]);
-  }
-
-  return (
-    <div className="operation operation--invest">
-      <h2>Invest</h2>
-      <form className="form form--invest">
-        <input
-          type="number"
-          className="form__input form__input--invest-amount"
-          ref={amount}
-        />
-        <button className="form__btn form__btn--invest" onClick={handleClick}>
-          &rarr;
-        </button>
-        <label className="form__label form__label--invest">Amount</label>
-      </form>
-    </div>
-  );
-}
-
-interface ExpenseProps {
-  setTransactions: TSetStateLocalStorage<TransactionProps[]>;
-}
-
-export function Expense({ setTransactions }: ExpenseProps) {
+export function Transaction({ type, setTransactions }: ITransaction) {
   const amount = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
 
@@ -112,43 +19,59 @@ export function Expense({ setTransactions }: ExpenseProps) {
     let desc: string | undefined = "";
 
     if (!amount.current?.value) return;
-    if (amount.current && description.current) {
+    if (amount.current) {
       value = amount.current.value;
-      desc = description.current.value;
       (amount.current as HTMLInputElement).value = "";
-      (description.current as HTMLInputElement).value = "";
+
+      if (type === "expense" && description.current) {
+        desc = description.current.value;
+        (description.current as HTMLInputElement).value = "";
+      }
     }
 
     setTransactions((prev) => [
       ...prev,
       {
-        type: "expense",
-        description: desc || "expense",
+        type: type,
+        description: desc || type,
         date: getCurrentDate(),
-        amount: -parseFloat(value || "0") * 1000,
+        amount: parseFloat(value || "0") * 1000 * (type === "expense" ? -1 : 1),
       } as TransactionProps,
     ]);
   }
 
   return (
-    <div className="operation operation--expense">
-      <h2>Expense</h2>
-      <form className="form form--expense">
-        <input
-          type="text"
-          className="form__input form__input--description"
-          ref={description}
-        />
+    <div className={`operation operation--${type}`}>
+      <h2>{type}</h2>
+      <form className={`form form--${type}`}>
+        {type === "expense" && (
+          <input
+            type="text"
+            className="form__input form__input--description"
+            ref={description}
+          />
+        )}
         <input
           type="number"
-          className="form__input form__input--amount"
+          className={`form__input form__input--amount`}
           ref={amount}
         />
-        <button className="form__btn form__btn--expense" onClick={handleClick}>
+        <button
+          className={`form__btn form__btn--${type}`}
+          onClick={handleClick}
+        >
           &rarr;
         </button>
-        <label className="form__label">Description</label>
-        <label className="form__label">Amount</label>
+        {type === "expense" && (
+          <label className="form__label">Description</label>
+        )}
+        <label
+          className={`form__label ${
+            type !== "expense" && `form__label--${type}`
+          }`}
+        >
+          Amount
+        </label>
       </form>
     </div>
   );

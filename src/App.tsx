@@ -4,7 +4,7 @@ import logo from "./assets/logo.png";
 import Balance from "./Components/Balance";
 import Movements from "./Components/Movements";
 import Summary from "./Components/Summary";
-import { Income, Invest, Expense } from "./Components/Transaction";
+import { Transaction } from "./Components/Transaction";
 import Popup from "./Components/Popup";
 import { useLocalStorageState } from "./hooks/useLocalStorage";
 
@@ -31,15 +31,12 @@ export default function App() {
   const [transactions, setTransactions] = useLocalStorageState<
     TransactionProps[]
   >("transactions", []);
-
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionProps>();
-
   const [sort, setSort] = useState(false);
   const [togglePopup, setTogglePopup] = useState(false);
 
   const balance = calcBalance(transactions);
-
   const sortedTransactions = transactions
     .slice()
     .sort((a, b) => Math.abs(a.amount) - Math.abs(b.amount));
@@ -79,9 +76,9 @@ export default function App() {
           setTogglePopup={setTogglePopup}
         />
         <Summary transactions={transactions} setSort={setSort} />
-        <Income setTransactions={setTransactions} />
-        <Invest setTransactions={setTransactions} />
-        <Expense setTransactions={setTransactions} />
+        <Transaction type="income" setTransactions={setTransactions} />
+        <Transaction type="invest" setTransactions={setTransactions} />
+        <Transaction type="expense" setTransactions={setTransactions} />
       </main>
 
       {/* <footer>&copy; by Jonas Schmedtmann.</footer> */}
