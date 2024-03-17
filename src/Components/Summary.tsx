@@ -1,11 +1,11 @@
-import { TransactionProps } from "../App";  
+import { TransactionProps } from "../App";
 import { formatCurrency } from "../utils/utils";
 
-interface SummaryProps {
+interface ISummary {
   transactions: TransactionProps[];
   setSort: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function Summary({ transactions, setSort }: SummaryProps) {
+export default function Summary({ transactions, setSort }: ISummary) {
   let [totalIncome, totalInvest, totalExpense] = [0, 0, 0];
 
   for (const transaction of transactions) {

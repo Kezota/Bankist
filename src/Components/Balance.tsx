@@ -1,10 +1,10 @@
 import { formatCurrency, getCurrentDate } from "../utils/utils";
 
-export interface BalanceProps {
+export interface IBalance {
   balance: number;
 }
 
-export default function Balance({ balance }: BalanceProps) {
+export default function Balance({ balance }: IBalance) {
   return (
     <div className="balance">
       <div className="balance__left">

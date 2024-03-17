@@ -1,7 +1,7 @@
 import { formatCurrency } from "../utils/utils";
 import { TransactionProps } from "../App";
 
-interface MovementsProps {
+interface IMovements {
   transactions: TransactionProps[];
   setSelectedTransaction: React.Dispatch<
     React.SetStateAction<TransactionProps | undefined>
@@ -13,7 +13,7 @@ export default function Movements({
   transactions,
   setSelectedTransaction,
   setTogglePopup,
-}: MovementsProps) {
+}: IMovements) {
   function handleClick(
     event: React.MouseEvent<HTMLDivElement>,
     transaction: TransactionProps

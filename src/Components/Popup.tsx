@@ -1,7 +1,7 @@
 import { TransactionProps } from "../App";
 import { formatCurrency } from "../utils/utils";
 
-interface PopupProps {
+interface IPopup {
   selectedTransaction: TransactionProps;
   setTogglePopup: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedTransaction: React.Dispatch<
@@ -13,7 +13,7 @@ export default function Popup({
   selectedTransaction,
   setTogglePopup,
   setSelectedTransaction,
-}: PopupProps) {
+}: IPopup) {
   function closePopup(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     setTogglePopup((prev) => !prev);
