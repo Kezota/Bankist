@@ -18,8 +18,8 @@ export function useLocalStorageState<T>(
   }, [key]);
 
   const setLocalStorageItem = useCallback<TSetStateLocalStorage<T>>(
-    (callbackFn) => {
-      setItem((currentItem) => {
+    (callbackFn: (currentItem: T) => T | T) => {
+      setItem((currentItem: T) => {
         const value =
           typeof callbackFn === "function"
             ? callbackFn(currentItem)

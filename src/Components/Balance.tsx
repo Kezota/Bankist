@@ -1,10 +1,9 @@
+import { useAppContext } from "../context/AppContext";
 import { formatCurrency, getCurrentDate } from "../utils/utils";
 
-export interface IBalance {
-  balance: number;
-}
+export default function Balance() {
+  const { balance } = useAppContext();
 
-export default function Balance({ balance }: IBalance) {
   return (
     <div className="balance">
       <div className="balance__left">

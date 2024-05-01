@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { TransactionProps } from "../App";
 import { getCurrentDate } from "../utils/utils";
-import { TSetStateLocalStorage } from "../hooks/useLocalStorage";
+import { useAppContext } from "../context/AppContext";
 
 interface ITransaction {
   type: string;
-  setTransactions: TSetStateLocalStorage<TransactionProps[]>;
 }
 
-export function Transaction({ type, setTransactions }: ITransaction) {
+export function Transaction({ type }: ITransaction) {
+  const { onAddTransaction } = useAppContext();
   const amount = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
 
@@ -29,21 +29,18 @@ export function Transaction({ type, setTransactions }: ITransaction) {
       }
     }
 
-    setTransactions((prev) => [
-      ...prev,
-      {
-        type: type,
-        description: desc || type,
-        date: getCurrentDate(),
-        amount: parseFloat(value || "0") * 1000 * (type === "expense" ? -1 : 1),
-      } as TransactionProps,
-    ]);
+    onAddTransaction({
+      type: type,
+      description: desc || type,
+      date: getCurrentDate(),
+      amount: parseFloat(value || "0") * 1000 * (type === "expense" ? -1 : 1),
+    } as TransactionProps);
   }
 
   return (
     <div className={`operation operation--${type}`}>
       <h2>{type}</h2>
-      <form className={`form form--${type}`}>
+      <div className={`form form--${type}`}>
         {type === "expense" && (
           <input
             type="text"
@@ -72,7 +69,7 @@ export function Transaction({ type, setTransactions }: ITransaction) {
         >
           Amount
         </label>
-      </form>
+      </div>
     </div>
   );
 }
