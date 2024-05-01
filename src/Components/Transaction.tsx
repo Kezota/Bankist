@@ -7,7 +7,7 @@ interface ITransaction {
   type: string;
 }
 
-export function Transaction({ type }: ITransaction) {
+export default function Transaction({ type }: ITransaction) {
   const { onAddTransaction } = useAppContext();
   const amount = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);

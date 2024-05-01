@@ -1,7 +1,7 @@
 import Balance from "./components/Balance";
 import Movements from "./components/Movements";
 import Summary from "./components/Summary";
-import { Transaction } from "./components/Transaction";
+import Transaction from "./components/Transaction";
 import Popup from "./components/Popup";
 import { AppProvider, useAppContext } from "./context/AppContext";
 import logo from "./assets/logo.png";
