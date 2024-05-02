@@ -1,4 +1,4 @@
-import { TransactionProps } from "../types/TransactionProps";
+import { TransactionProps } from "../types/transactionProps";
 
 export default function calcBalance(transactions: TransactionProps[]) {
   let [totalIncome, totalInvest, totalExpense] = [0, 0, 0];

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorage";
 import calcBalance from "../utils/calcBalance";
-import { TransactionProps } from "../types/TransactionProps";
+import { TransactionProps } from "../types/transactionProps";
 
 interface AppContextProps {
   transactions: TransactionProps[];
