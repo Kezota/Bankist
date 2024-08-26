@@ -13,7 +13,8 @@ Check out the live version of the app:
 
 - **Transaction Management**: Record and categorize your income, expenses, and investments with ease.
 - **Real-Time Balance Update**: Instantly see your updated balance as you add transactions.
-- **Delete Transaction**:
+- **Delete Transactions**: Easily remove any transaction you no longer want to track.
+- **Browser Local Storage**: All transactions are stored locally in your browser, ensuring your data persists even after you close the app.
 - **Sort By Date and Amount Options**: Organize your transaction history to easily track your financial activity.
 
 ## 💻 Technologies Used
@@ -32,11 +33,11 @@ If you want to run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Kezota/bankist-tracker.git
+   git clone https://github.com/Kezota/Bankist.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd bankist-tracker
+   cd Bankist
    ```
 3. Install the dependencies:
    ```bash
