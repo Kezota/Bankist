@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { TransactionProps } from "../App";
+import { TransactionProps } from "../types/transactionProps";
 import { getCurrentDate } from "../utils/utils";
 import { useAppContext } from "../context/AppContext";
 
