@@ -6,12 +6,12 @@ import Popup from "./Components/Popup";
 import { AppProvider, useAppContext } from "./context/AppContext";
 import logo from "./assets/logo.png";
 
-export type TransactionProps = {
-  type: string;
-  description: string;
-  date: string;
-  amount: number;
-};
+// export type TransactionProps = {
+//   type: string;
+//   description: string;
+//   date: string;
+//   amount: number;
+// };
 
 function PopupComponent() {
   const { togglePopup } = useAppContext();

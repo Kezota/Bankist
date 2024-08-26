@@ -1,6 +1,6 @@
 export type TransactionProps = {
+  date: string;
   type: string;
   description: string;
-  date: string;
   amount: number;
 };
